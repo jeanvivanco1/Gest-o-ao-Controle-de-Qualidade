@@ -61,3 +61,13 @@ Você precisará ter instalado em sua máquina:
    ```bash
    npm run lint
    ```
+
+---
+
+## 🔄 Gestão de Mudanças: Justificativa de Alteração de Escopo
+No decorrer do desenvolvimento, foi reportada uma necessidade crítica pela startup de logística parceira: a incapacidade de priorizar despachos urgentes de cargas e o controle ineficaz do prazo limite das entregas.
+
+### Modificações Realizadas:
+1. **Priorização Dinâmica**: Adição do campo `priority` (Baixa, Média, Alta) no modelo da tarefa, colorindo o painel e diferenciando cargas normais de prioritárias.
+2. **Prazo de Vencimento**: Adição do campo `dueDate` (data limite). Tarefas com prazos expirados exibem um indicador visual chamativo de atraso (`⚠️ Prazo: DD/MM`) sob efeito pulsante vermelho.
+3. **Pipeline & Cobertura**: Os testes automatizados locais e no CI (GitHub Actions) foram expandidos para verificar o comportamento dessas novas propriedades, garantindo que o sistema continue estável e seguro.

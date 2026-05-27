@@ -1,9 +1,11 @@
 class Task {
-  constructor({ id, title, description, status, createdAt }) {
+  constructor({ id, title, description, status, priority, dueDate, createdAt }) {
     this.id = id || Math.random().toString(36).substring(2, 11);
     this.title = title;
     this.description = description || '';
     this.status = status || 'A Fazer'; // Padrão: A Fazer
+    this.priority = priority || 'Média'; // Padrão: Média (Baixa, Média, Alta)
+    this.dueDate = dueDate || null; // Formato YYYY-MM-DD ou null
     this.createdAt = createdAt || new Date().toISOString();
   }
 
@@ -18,6 +20,15 @@ class Task {
       throw new Error(`Status inválido. Deve ser um de: ${validStatuses.join(', ')}.`);
     }
 
+    const validPriorities = ['Baixa', 'Média', 'Alta'];
+    if (!validPriorities.includes(this.priority)) {
+      throw new Error(`Prioridade inválida. Deve ser uma de: ${validPriorities.join(', ')}.`);
+    }
+
+    if (this.dueDate && isNaN(Date.parse(this.dueDate))) {
+      throw new Error('A data limite (dueDate) inserida é inválida.');
+    }
+
     return true;
   }
 
@@ -28,6 +39,8 @@ class Task {
       title: this.title,
       description: this.description,
       status: this.status,
+      priority: this.priority,
+      dueDate: this.dueDate,
       createdAt: this.createdAt
     };
   }

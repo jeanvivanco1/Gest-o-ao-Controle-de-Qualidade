@@ -25,6 +25,16 @@ describe('Task Model', () => {
     const task = new Task({ title: 'Tarefa', status: 'Cancelada' });
     expect(() => task.validate()).toThrow('Status inválido');
   });
+
+  test('Deve lançar erro ao validar tarefa com prioridade inválida', () => {
+    const task = new Task({ title: 'Tarefa', priority: 'Urgente' });
+    expect(() => task.validate()).toThrow('Prioridade inválida');
+  });
+
+  test('Deve lançar erro ao validar tarefa com data limite inválida', () => {
+    const task = new Task({ title: 'Tarefa', dueDate: 'data-invalida' });
+    expect(() => task.validate()).toThrow('A data limite (dueDate) inserida é inválida.');
+  });
 });
 
 describe('Task Service', () => {

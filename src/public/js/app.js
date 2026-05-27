@@ -76,17 +76,43 @@ function createTaskCard(task) {
     card.classList.remove('dragging');
   });
 
-  // Formata a data
-  const dateFormatted = new Date(task.createdAt).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit'
-  });
+  // Validação e formatação de data limite (Due Date)
+  let dueDateHTML = '';
+  if (task.dueDate) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const limitDate = new Date(task.dueDate + 'T00:00:00'); // Garante fuso horário local
+    const isOverdue = limitDate < today && task.status !== 'Concluído';
+    
+    const formattedDueDate = limitDate.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit'
+    });
+
+    if (isOverdue) {
+      dueDateHTML = `<span class="card-date overdue" title="Tarefa atrasada!">⚠️ Prazo: ${formattedDueDate}</span>`;
+    } else {
+      dueDateHTML = `<span class="card-date">📅 Prazo: ${formattedDueDate}</span>`;
+    }
+  } else {
+    // Se não tiver prazo limite, exibe a data de criação
+    const createdFormatted = new Date(task.createdAt).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit'
+    });
+    dueDateHTML = `<span class="card-date">Criado: ${createdFormatted}</span>`;
+  }
+
+  const priorityClass = (task.priority || 'Média').toLowerCase().replace('é', 'e');
 
   card.innerHTML = `
-    <h4 class="card-title">${escapeHTML(task.title)}</h4>
+    <div class="card-header-row">
+      <h4 class="card-title">${escapeHTML(task.title)}</h4>
+      <span class="priority-badge ${priorityClass}">${escapeHTML(task.priority || 'Média')}</span>
+    </div>
     <p class="card-desc">${escapeHTML(task.description || 'Sem descrição.')}</p>
     <div class="card-footer">
-      <span class="card-date">📅 ${dateFormatted}</span>
+      ${dueDateHTML}
       <div class="card-actions">
         ${getNavigationButtonsHTML(task)}
         <button class="btn-icon-only btn-delete" onclick="deleteTask('${task.id}')" title="Excluir">🗑️</button>
@@ -125,8 +151,10 @@ async function saveTask(event) {
   const id = document.getElementById('task-id').value;
   const title = document.getElementById('input-title').value;
   const description = document.getElementById('input-desc').value;
+  const priority = document.getElementById('input-priority').value;
+  const dueDate = document.getElementById('input-duedate').value || null;
 
-  const payload = { title, description };
+  const payload = { title, description, priority, dueDate };
 
   try {
     let response;

@@ -24,8 +24,8 @@ app.get('/api/tasks', (req, res) => {
 // Criar nova tarefa
 app.post('/api/tasks', (req, res) => {
   try {
-    const { title, description } = req.body;
-    const newTask = taskService.createTask({ title, description });
+    const { title, description, priority, dueDate } = req.body;
+    const newTask = taskService.createTask({ title, description, priority, dueDate });
     res.status(201).json(newTask);
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -89,6 +89,20 @@
           <label for="input-desc">Descrição / Detalhes</label>
           <textarea id="input-desc" rows="4" placeholder="Detalhes do envio, prioridades logísticas ou observações..."></textarea>
         </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="input-priority">Prioridade</label>
+            <select id="input-priority">
+              <option value="Baixa">Baixa</option>
+              <option value="Média" selected>Média</option>
+              <option value="Alta">Alta</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="input-duedate">Prazo Limite (Due Date)</label>
+            <input type="date" id="input-duedate">
+          </div>
+        </div>
         <div class="form-actions">
           <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
           <button type="submit" class="btn btn-submit">Salvar Tarefa</button>
