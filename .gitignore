@@ -1,0 +1,13 @@
+# Dependências
+node_modules/
+jspm_packages/
+
+# Arquivos de dados locais (gerados em runtime)
+data/*.json
+!data/.gitkeep
+
+# Logs do sistema
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache

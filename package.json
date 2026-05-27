@@ -1,0 +1,19 @@
+{
+  "name": "techflow-tasks",
+  "version": "1.0.0",
+  "description": "Sistema de Gerenciamento de Tarefas Ágeis - TechFlow Solutions",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest",
+    "lint": "eslint src/**/*.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0"
+  },
+  "private": true
+}
