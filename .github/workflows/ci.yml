@@ -1,0 +1,30 @@
+name: TechFlow CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Código Source
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: Instalar Dependências
+      run: npm install
+
+    - name: Validar Qualidade do Código (Lint)
+      run: npm run lint
+
+    - name: Executar Testes Automatizados (Jest)
+      run: npm test
